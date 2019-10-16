@@ -6,17 +6,14 @@
     <h1>Welcome to Book Meets!</h1>
     <!-- <p>Resize this responsive page to see the effect!</p>  -->
   </div>
-    <!-- <h1 class="text-center">My Lipsticks Inventory</h1> -->
-    <!-- <a href='/lipsticks/new'>New Lipstick</a> -->
+   
     <div class='row'>
             
     {% for book in books %}
     <div class="card">
             <div class='col-md-3'>
             <div class="card-body">
-    
-        <!-- <h2>{{ lipstick.brand}}</h2> -->
-        <!-- <small>{{lipstick.brand}} </small> -->
+ 
         <a href='/books/{{ book._id }}'>
             <small><img src = "{{ book.image }}" height="150" width="150"></small>
             

@@ -29,11 +29,12 @@ def book_submit():
     book = {
         'type': request.form.get('type'),
         'name' : request.form.get('name'),
+        'author': request.form.get('author'),
         'image': request.form.get('image'),
         'description' : request.form.get('description')
     }
     book_id = books.insert_one(book).inserted_id
-    #lipsticks.insert_one(lipstick)
+    
     # print(request.form.to_dict())
     return redirect(url_for('book_show', book_id = book_id))
 
@@ -55,6 +56,7 @@ def book_update(book_id):
     updated_book = {
          'type': request.form.get('type'),
         'name' : request.form.get('name'),
+        'author' : request.form.get('author'),
         'image': request.form.get('image'),
         'description' : request.form.get('description')
     }

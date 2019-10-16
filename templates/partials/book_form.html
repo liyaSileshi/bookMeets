@@ -9,24 +9,34 @@
 
     <!-- name -->
     <p>
-        <label for='name'> Book name:</label><br>
+        <label for='name'> Name of book:</label><br>
         <input type='text' name='name' value='{{ book.name }}'/>
     </p>
 
-    
+     <!-- author -->
+     <p>
+        <label for='author'> Author:</label><br>
+        <input type='text' name='author' value='{{ book.author }}'/>
+    </p>
+
 
     <!-- image -->
     <p>
-        <label for='image'>URL for image:</label><br>
+        <label for='image'>URL for image of book:</label><br>
         <input type='text' name='image' value='{{ book.image }}'/>
     </p>
 
     <!-- description -->
-    <p>
+    <!-- <p>
         <label for='description'>description:</label><br>
         <input type="description" name="description" value='{{ book.description }}'/>
-    </p>
+    </p> -->
 
+    <p>
+        <label for='description'>description: </label><br>
+        <p class = 'text-muted'> Add a little description about the book.</p>
+        <textarea class = 'form-control' id='book-description' name='description' rows='10' /></textarea>
+    </p>
     
 </fieldset>
 
