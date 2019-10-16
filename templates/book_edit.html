@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method='POST' action='/books/{{book._id}}' >
+      {% include 'partials/book_form.html' %}
+</form>
+<form action="/">
+    <input type="submit" value="Cancel" />
+</form>
+{% endblock %}
