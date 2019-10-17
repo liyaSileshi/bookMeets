@@ -1,0 +1,31 @@
+<form method='POST' action='/books/{{book._id}}/adduser'>
+    
+    <input type='hidden' value='{{ book._id }}' name='book_id'/>
+    <fieldset>
+        <legend>Add a User</legend>
+        <!-- name-->
+        <div class='form-group'>
+            <label for='user-name'>Name</label><br>
+            <input class='form-control'
+                id='user-name'
+                type='text'
+                name='name'
+                placeholder='name'/>
+        </div>
+
+        <!-- contact -->
+        <div class='form-group'>
+            <label for='user-contact'>Contact</label><br>
+            <textarea class='form-control'
+                id='user-contact'
+                name='contact'
+                rows='10'
+                placeholder='Your contact...'></textarea>
+        </div>
+    </fieldset>
+
+    <!-- BUTTON -->
+    <div class='form-group'>
+        <button class='btn btn-primary' type='submit'>Save Comment</button>
+    </div>
+</form>

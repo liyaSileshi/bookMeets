@@ -8,6 +8,7 @@ host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/bookMeets')
 client = MongoClient(host=f'{host}?retryWrites=false')
 db = client.get_default_database()
 books = db.books
+users = db.users
 
 
 app = Flask(__name__)
@@ -42,6 +43,7 @@ def book_submit():
 def book_show(book_id):
     """Show a single book."""
     book = books.find_one({'_id' : ObjectId(book_id)})
+    book_users = users.find({'book_id': ObjectId(book_id)})
     return render_template('book_show.html', book= book)
 
 @app.route('/books/<book_id>/edit')
@@ -71,6 +73,23 @@ def book_delete(book_id):
     books.delete_one({'_id': ObjectId(book_id)})
     return redirect(url_for('book_index'))
 
+@app.route('/books/<book_id>/adduser', methods=['GET','POST'])
+def user_new(book_id):
+    """Add a new user."""
+    if request.method == 'POST':
+        user = {
+            'name': request.form.get('name'),
+            'comment' : request.form.get('comment')
+        }
+        user_id = users.insert_one(user).inserted_id
+        #print(user)
+    #return redirect(url_for('book_show', book_id=request.form.get('book_id')))
+    return render_template('user_new.html', book = {})
+
+@app.route('/books/<book_id>/seeuser', methods=['GET','POST'])
+def all_users(book_id):
+    """Show all users."""
+    return render_template('user_index.html', users=users.find())
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT', 5000))
