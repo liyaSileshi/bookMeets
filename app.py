@@ -84,10 +84,10 @@ def user_new(book_id):
 @app.route('/books/<book_id>/adduser', methods=['POST'])
 def user_submit(book_id):
     """Submit a new user."""
-    print("HEY WILL")
     user = {
        'name': request.form.get('name'),
-       'contact' : request.form.get('contact')
+       'contact' : request.form.get('contact'),
+       'book_id': ObjectId(book_id),
     }
     user_id = users.insert_one(user).inserted_id
     # print(request.form.to_dict())
@@ -97,7 +97,9 @@ def user_submit(book_id):
 @app.route('/books/<book_id>/seeuser', methods=['GET','POST'])
 def all_users(book_id):
     """Show all users."""
-    return render_template('user_index.html', users=users.find())
+    return render_template('user_index.html', users=users.find({'book_id': ObjectId(book_id)}))
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT', 5000))
