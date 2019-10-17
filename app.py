@@ -73,18 +73,26 @@ def book_delete(book_id):
     books.delete_one({'_id': ObjectId(book_id)})
     return redirect(url_for('book_index'))
 
-@app.route('/books/<book_id>/adduser', methods=['GET','POST'])
+@app.route('/books/<book_id>/adduser', methods=['GET'])
 def user_new(book_id):
     """Add a new user."""
-    if request.method == 'POST':
-        user = {
-            'name': request.form.get('name'),
-            'comment' : request.form.get('comment')
-        }
-        user_id = users.insert_one(user).inserted_id
+    
         #print(user)
     #return redirect(url_for('book_show', book_id=request.form.get('book_id')))
-    return render_template('user_new.html', book = {})
+    return render_template('user_new.html', book_id=book_id)
+
+@app.route('/books/<book_id>/adduser', methods=['POST'])
+def user_submit(book_id):
+    """Submit a new user."""
+    print("HEY WILL")
+    user = {
+       'name': request.form.get('name'),
+       'contact' : request.form.get('contact')
+    }
+    user_id = users.insert_one(user).inserted_id
+    # print(request.form.to_dict())
+    return redirect(url_for('all_users', book_id=book_id))
+
 
 @app.route('/books/<book_id>/seeuser', methods=['GET','POST'])
 def all_users(book_id):
