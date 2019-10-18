@@ -107,22 +107,23 @@ def user_delete(user_id):
     return redirect(url_for('all_users', book_id= user.get('book_id')))
 
 
+#https://stackoverflow.com/questions/54721621/how-can-i-search-in-mongodb-using-an-html-page-with-button-and-using-flask-with
 @app.route('/list', methods=['GET','POST'])
 def lists():
     if request.method == 'POST':
         name = request.form['book']#form input on initial position
-        
+        #print(name)
         #collection where routes are present
         check_db = books.find() #check all documents in collection
         #return render_template('searchlist.html', pos=pos, pos1=pos1,lat1=lat1,long1=long1,lat2=lat2,long2=long2)
 
         for book in check_db:
-            print(book)
+            #print(book)
             if (book['name'] == name):
-                print(book)
+                #print(book)
                 return render_template('book_search.html', book = book)
              #   return 'route found'
-        return 'book is not there u dumbass'
+        return "Sorry we currently don't have that book"
 
     
 
