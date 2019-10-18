@@ -5,32 +5,55 @@
 <div class="jumbotron text-center" style="margin-bottom:0">
     <h1>Welcome to Book Meets!</h1>
     <!-- <p>Resize this responsive page to see the effect!</p>  -->
-  </div>
+</div>
   <br>
   
-<h2>Search for a book: </h2>
-<form action="/list" method="POST" autocomplete="on">
+<!-- <h2>Search for a book: </h2> -->
+<!-- <form action="/list" method="POST" autocomplete="on">
 <td><input type="text" name="book" placeholder="type here" size="20" /></td>
+<td><button type="submit">Search</button></td> -->
 
-<td><button type="submit">Search</button></td>
+
+<br>
+
+<!-- https://stackoverflow.com/questions/40303303/search-box-with-button-bootstrap-3 -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+<form action="/list" method="POST"> 
+  <div class="row">
+    <div class="col-xs-6 col-md-4">
+      <div class="input-group">
+        <input type="text" name= 'book' class="form-control" placeholder="Search" id="txtSearch"/>
+        <div class="input-group-btn">
+          <button class="btn btn-primary" type="submit">
+            <span class="glyphicon glyphicon-search"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
 
 
-   
     <div class='row'>
             <br>
     {% for book in books %}
-    <div class="card">
-            <div class='col-md-3'>
-            <div class="card-body">
- 
-        <a href='/books/{{ book._id }}'>
-            <small><img src = "{{ book.image }}" ></small>
+     <div class="card">
+             <div class='col-sm-6'>
             
-        </a>
-    </div>
-</div>
+            <a href='/books/{{ book._id }}'>
+                <img class="card-img-top" src="{{ book.image }}" alt="Card image cap">
+            </a>
+        <div class="card-body"> 
+
+            <a href='/books/{{ book._id }}'>
+                <p class="card-text"><h3>{{book.name}}</h3></p>
+            </a>
+     </div>
+</div> 
 </div>
 <br>
+
+
     {% endfor %}
 </div>
 
