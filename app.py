@@ -11,7 +11,8 @@ books = db.books
 users = db.users
 
 
-app = Flask(__name__)
+app = Flask(__name__,    static_url_path='', 
+            static_folder='web/static')
 
 
 @app.route('/')
