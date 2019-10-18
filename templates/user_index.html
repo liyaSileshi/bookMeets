@@ -3,7 +3,7 @@
 {% include 'partials/navbar.html' %}
 {% for user in users %}
 
-    <h2>{{user.name}}</h2>
+    <h3>{{user.name}}</h3>
     {{user.contact}}<br>
     <br>
     <p><form method='POST' action='/books/users/{{ user._id }}'>
