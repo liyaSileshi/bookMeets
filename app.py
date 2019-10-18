@@ -99,8 +99,32 @@ def all_users(book_id):
     """Show all users."""
     return render_template('user_index.html', users=users.find({'book_id': ObjectId(book_id)}))
 
+@app.route('/books/users/<user_id>', methods=['POST'])
+def user_delete(user_id):
+    """Action to delete a user."""
+    user = users.find_one({'_id': ObjectId(user_id)})
+    users.delete_one({'_id': ObjectId(user_id)})
+    return redirect(url_for('all_users', book_id= user.get('book_id')))
 
 
+@app.route('/list', methods=['GET','POST'])
+def lists():
+    if request.method == 'POST':
+        name = request.form['book']#form input on initial position
+        
+        #collection where routes are present
+        check_db = books.find() #check all documents in collection
+        #return render_template('searchlist.html', pos=pos, pos1=pos1,lat1=lat1,long1=long1,lat2=lat2,long2=long2)
+
+        for book in check_db:
+            print(book)
+            if (book['name'] == name):
+                print(book)
+                return render_template('book_search.html', book = book)
+             #   return 'route found'
+        return 'book is not there u dumbass'
+
+    
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT', 5000))
