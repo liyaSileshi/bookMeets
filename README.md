@@ -9,3 +9,5 @@ add books.
 
 Once you find the book that you like, you can click on it and get the description. 
 After that, you can add yourself to the readers list and see who is also on that list to connect with people.
+
+use this link to see the live app: https://bookmeets.herokuapp.com/
