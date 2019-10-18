@@ -15,6 +15,7 @@ app = Flask(__name__,    static_url_path='',
             static_folder='web/static')
 
 
+
 @app.route('/')
 def book_index():
     """Show all books."""
@@ -36,8 +37,6 @@ def book_submit():
         'description' : request.form.get('description')
     }
     book_id = books.insert_one(book).inserted_id
-    
-    # print(request.form.to_dict())
     return redirect(url_for('book_show', book_id = book_id))
 
 @app.route('/books/<book_id>')
