@@ -4,14 +4,14 @@ from bson.objectid import ObjectId
 import os
 from datetime import datetime
 
-host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/bookmeets')
+host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/bookMeets')
 client = MongoClient(host=f'{host}?retryWrites=false')
 db = client.get_default_database()
 books = db.books
 users = db.users
 
 
-app = Flask(__name__,    static_url_path='', 
+app = Flask(__name__, static_url_path='', 
             static_folder='web/static')
 
 
@@ -21,11 +21,13 @@ def book_index():
     """Show all books."""
     return render_template('book_index.html', books=books.find())
 
+
 @app.route('/books/new')
 def book_new():
     """Add new book."""
     return render_template('book_new.html', book = {}, title = 'Add book')
             
+
 @app.route('/books', methods=['POST'])
 def book_submit():
     """Submit a new book."""
@@ -39,6 +41,7 @@ def book_submit():
     book_id = books.insert_one(book).inserted_id
     return redirect(url_for('book_show', book_id = book_id))
 
+
 @app.route('/books/<book_id>')
 def book_show(book_id):
     """Show a single book."""
@@ -46,11 +49,13 @@ def book_show(book_id):
     book_users = users.find({'book_id': ObjectId(book_id)})
     return render_template('book_show.html', book= book)
 
+
 @app.route('/books/<book_id>/edit')
 def book_edit(book_id):
     """Show the edit form for a book."""
     book = books.find_one({'_id': ObjectId(book_id)})
     return render_template('book_edit.html', book=book, tilte = 'Edit Book')
+
 
 @app.route('/books/<book_id>', methods=['POST'])
 def book_update(book_id):
@@ -67,11 +72,13 @@ def book_update(book_id):
         {'$set': updated_book})
     return redirect(url_for('book_show', book_id=book_id))
 
+
 @app.route('/books/<book_id>/delete', methods=['POST'])
 def book_delete(book_id):
     """Delete one book."""
     books.delete_one({'_id': ObjectId(book_id)})
     return redirect(url_for('book_index'))
+
 
 @app.route('/books/<book_id>/adduser', methods=['GET'])
 def user_new(book_id):
@@ -80,6 +87,7 @@ def user_new(book_id):
         #print(user)
     #return redirect(url_for('book_show', book_id=request.form.get('book_id')))
     return render_template('user_new.html', book_id=book_id)
+
 
 @app.route('/books/<book_id>/adduser', methods=['POST'])
 def user_submit(book_id):
@@ -99,12 +107,14 @@ def all_users(book_id):
     """Show all users."""
     return render_template('user_index.html', users=users.find({'book_id': ObjectId(book_id)}))
 
+
 @app.route('/books/users/<user_id>', methods=['POST'])
 def user_delete(user_id):
     """Action to delete a user."""
     user = users.find_one({'_id': ObjectId(user_id)})
     users.delete_one({'_id': ObjectId(user_id)})
     return redirect(url_for('all_users', book_id= user.get('book_id')))
+
 
 
 #https://stackoverflow.com/questions/54721621/how-can-i-search-in-mongodb-using-an-html-page-with-button-and-using-flask-with
@@ -115,17 +125,13 @@ def lists():
         #print(name)
         #collection where routes are present
         check_db = books.find() #check all documents in collection
-        #return render_template('searchlist.html', pos=pos, pos1=pos1,lat1=lat1,long1=long1,lat2=lat2,long2=long2)
-
         for book in check_db:
             #print(book)
-            if (book['name'] == name):
+            if (name in book['name']):
                 #print(book)
                 return render_template('book_search.html', book = book)
              #   return 'route found'
         return "Sorry we currently don't have that book"
-
-    
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT', 5000))
