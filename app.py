@@ -131,7 +131,7 @@ def lists():
                 #print(book)
                 return render_template('book_search.html', book = book)
              #   return 'route found'
-        return "Sorry we currently don't have that book"
+        return "Sorry we currently don't have that book :( "
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT', 5000))
